@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ProgressBarDemo</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="add">增加</string>
+    <string name="reduce">减少</string>
+    <string name="reset">重置</string>
+    <string name="show">显示</string>
+</resources>

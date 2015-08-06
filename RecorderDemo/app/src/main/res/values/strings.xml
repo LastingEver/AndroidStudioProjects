@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RecorderDemo</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="recorder_normal">按住说话</string>
+    <string name="recorder_recording">松开结束</string>
+    <string name="recorder_want_to_cancel">松开手指，取消发送</string>
+</resources>

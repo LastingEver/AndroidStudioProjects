@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <ListView
+        android:id="@+id/listView1"
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:background="#ebebeb"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </ListView>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.lastingever.recorderdemo.AudioRecorderButton
+            android:id="@+id/button1"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/recorder_normal"
+            android:textColor="#727272"
+            android:background="@drawable/button_recorder_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="#ccc"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+    </FrameLayout>
+</LinearLayout>

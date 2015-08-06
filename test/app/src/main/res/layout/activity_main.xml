@@ -1,0 +1,97 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button1"
+            android:id="@+id/button1" />
+        <Button
+            android:id="@+id/button2"
+            android:text="Button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/button3"
+            android:text="Button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.example.lasting.test.marquee
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:text="这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView"/>
+    <com.example.lasting.test.marquee
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:text="这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView这是一个TextView"/>
+
+    <AutoCompleteTextView
+        android:completionThreshold="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入要搜索的关键字"
+        android:id="@+id/autoCompleteTextView1" />
+
+    <MultiAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入要搜索的关键字"
+        android:id="@+id/multiAutoCompleteTextView1" />
+
+    <ToggleButton
+        android:checked="false"
+        android:textOff="变小"
+        android:textOn="变大"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toggleButton1" />
+
+    <ImageButton
+        android:background="@drawable/ic_launcher2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton1" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:text="羽毛球"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:text="男"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:text="女"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+</LinearLayout>

@@ -1,0 +1,55 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:showAsAction="never"
+        android:title="文件" >
+
+        <menu>
+            <item
+                android:id="@+id/group1item1"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="新建" />
+            <item
+                android:id="@+id/group1item2"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="打开" />
+            <item
+                android:id="@+id/group1item3"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="保存" />
+        </menu>
+    </item>
+
+    <item
+        android:showAsAction="never"
+        android:title="编辑" >
+
+        <menu>
+            <item
+                android:id="@+id/group2item1"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="复制" />
+            <item
+                android:id="@+id/group2item2"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="粘贴" />
+            <item
+                android:id="@+id/group2item3"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="剪切" />
+            <item
+                android:id="@+id/group2item4"
+                android:orderInCategory="100"
+                android:showAsAction="never"
+                android:title="重命名" />
+        </menu>
+    </item>
+</menu>
