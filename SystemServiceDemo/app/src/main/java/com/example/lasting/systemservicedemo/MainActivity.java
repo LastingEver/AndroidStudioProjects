@@ -50,10 +50,10 @@ public class MainActivity extends Activity {
                 Toast.makeText(MainActivity.this, "系统最大音量:" + maxVolume + "\n" + "当前系统音量:" + volume, Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.button4: {
-                ActivityManager activityManager = (ActivityManager) MainActivity.this.getSystemService(ACTIVITY_SERVICE);
-                String packageName = activityManager.getRunningTasks(1).get(0).topActivity.getPackageName();
-                Toast.makeText(MainActivity.this, "当前运行的activity包名:" + packageName, Toast.LENGTH_SHORT).show();
+            case R.id.button4:{
+                ActivityManager activityManager= (ActivityManager) MainActivity.this.getSystemService(ACTIVITY_SERVICE);
+                String packageName=activityManager.getRunningTasks(1).get(0).topActivity.getPackageName();
+                Toast.makeText(MainActivity.this,"当前运行的activity包名:"+packageName,Toast.LENGTH_SHORT).show();
                 break;
             }
         }
@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
     public boolean isNetworkConnected(Context context) {
         if (context != null) {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo != null) {
                 return networkInfo.isAvailable();
             }

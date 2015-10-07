@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WiFiMusic</string>
+    <string name="action_settings">Settings</string>
+    <string name="path">下载地址：</string>
+    <string name="button">开始下载</string>
+    <string name="success">下载完成</string>
+    <string name="error">下载出错</string>
+    <string name="stopbutton">暂停下载</string>
+    <string name="sdcarderror">没有SD卡</string>
+</resources>
