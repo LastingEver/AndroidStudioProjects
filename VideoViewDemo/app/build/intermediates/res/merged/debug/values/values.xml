@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/home/lasting/文档/android-projects/VideoViewDemo/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
-    <color name="half_transparent">#77000000</color>
-    <color name="translucent_gray">#99000000</color>
-    <string name="app_name">VideoViewDemo</string>
-    <string name="hello">Hello World, VideoViewDemoActivity!</string>
-</resources>
