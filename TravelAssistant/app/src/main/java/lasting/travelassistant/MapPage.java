@@ -2,6 +2,7 @@ package lasting.travelassistant;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,20 +13,19 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.LocationSource;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.SupportMapFragment;
-import com.amap.api.maps2d.UiSettings;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.MarkerOptions;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MapPage extends SupportMapFragment implements LocationSource, AMapLocationListener {
-    private MapView mv = null;
     private AMap aMap = null;
     private UiSettings uiSettings = null;
 
@@ -39,8 +39,6 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_map, container, false);
-        mv = (MapView) view.findViewById(R.id.map);
-        mv.onSaveInstanceState(savedInstanceState);
 
         initMap();
 
@@ -55,9 +53,7 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
     }
 
     private void initMap() {
-        if (aMap == null){
-            aMap = mv.getMap();
-        }
+        aMap = ((SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map)).getMap();
         aMap.setTrafficEnabled(true);
         aMap.setLocationSource(this);
 
@@ -154,45 +150,5 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
         sb.append(aMapLocation.getCountry() + "" + aMapLocation.getProvince() + "" + aMapLocation.getCity() +  "" + aMapLocation.getDistrict() + "" + aMapLocation.getStreet() + "" + aMapLocation.getStreetNum());
         mo.title(sb.toString());
         return  mo;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (aMapLocationClient != null){
-            aMapLocationClient.onDestroy();
-        }
-        mv.onDestroy();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mv.onResume();
-        if (aMapLocationClient != null){
-            aMapLocationClient.startLocation();
-        }
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(14));
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mv.onPause();
-        if (aMapLocationClient != null){
-            aMapLocationClient.stopLocation();
-        }
-        deactivate();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mv.onSaveInstanceState(outState);
     }
 }
