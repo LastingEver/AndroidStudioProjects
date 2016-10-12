@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">旅游助手</string>
+    <string name="navigationItem1">首页</string>
+    <string name="navigationItem2">新闻</string>
+    <string name="navigationItem3">关于</string>
+    <string name="loginButton">登陆</string>
+    <string name="loginFP">忘记密码</string>
+</resources>

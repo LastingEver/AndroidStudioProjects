@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigationItem1"
+            android:checked="true"
+            android:icon="@drawable/app_logo"
+            android:title="@string/navigationItem1"/>
+
+        <item
+            android:id="@+id/navigationItem2"
+            android:icon="@drawable/app_logo"
+            android:title="@string/navigationItem2" />
+
+        <item
+            android:id="@+id/navigationItem3"
+            android:icon="@drawable/app_logo"
+            android:title="@string/navigationItem3"/>
+    </group>
+</menu>
