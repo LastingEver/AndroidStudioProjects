@@ -2,7 +2,6 @@ package lasting.travelassistant;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
@@ -35,21 +33,18 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
     private boolean isFirstLoc = true;
 
+    private View view = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_map, container, false);
+        view = inflater.inflate(R.layout.activity_map, container, false);
 
         initMap();
 
         initLoc();
 
         return view;
-    }
-
-    @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
     }
 
     private void initMap() {
