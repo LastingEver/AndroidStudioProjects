@@ -15,5 +15,10 @@
             android:id="@+id/navigationItem3"
             android:icon="@drawable/app_logo"
             android:title="@string/navigationItem3"/>
+
+        <item
+            android:id="@+id/navigationItem4"
+            android:icon="@drawable/app_logo"
+            android:title="@string/navigationItem4"/>
     </group>
 </menu>

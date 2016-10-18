@@ -2,6 +2,7 @@ package lasting.travelassistant;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.overlay.PoiOverlay;
+import com.amap.api.services.poisearch.PoiSearch;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +38,8 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
     private View view = null;
 
+    private SearchView sv = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +49,24 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
         initLoc();
 
+        initSea();
+
         return view;
+    }
+
+    private void initSea() {
+        sv = (SearchView) view.findViewById(R.id.searchView);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void initMap() {

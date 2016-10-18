@@ -79,6 +79,10 @@ public class MainPage extends FragmentActivity {
                         getSupportFragmentManager().beginTransaction().hide(getCurrentFragment()).show(ap).commit();
                         break;
 
+                    case R.id.navigationItem4:
+                        finish();
+                        break;
+
                     default:
                         break;
                 }
