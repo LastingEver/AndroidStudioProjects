@@ -20,8 +20,6 @@ import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.overlay.PoiOverlay;
-import com.amap.api.services.poisearch.PoiSearch;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,12 +47,12 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
         initLoc();
 
-        initSea();
+        initSearch();
 
         return view;
     }
 
-    private void initSea() {
+    private void initSearch() {
         sv = (SearchView) view.findViewById(R.id.searchView);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

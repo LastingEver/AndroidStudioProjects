@@ -40,12 +40,12 @@ public class MainPage extends FragmentActivity {
             getSupportFragmentManager().beginTransaction().hide(ap).commit();
         }
 
-        initPer();
+        initPerm();
 
-        initNav();
+        initLeftBar();
     }
 
-    private void initPer() {
+    private void initPerm() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -57,7 +57,7 @@ public class MainPage extends FragmentActivity {
         }
     }
 
-    private void initNav() {
+    private void initLeftBar() {
         nv = (NavigationView) findViewById(R.id.mdMenu);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
