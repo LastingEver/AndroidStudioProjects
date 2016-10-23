@@ -1,5 +1,6 @@
 package lasting.travelassistant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
@@ -17,8 +18,10 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.overlay.PoiOverlay;
 import com.amap.api.services.core.PoiItem;
@@ -28,6 +31,7 @@ import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MapPage extends SupportMapFragment implements LocationSource, AMapLocationListener {
+    private TextureMapView tmv = null;
     private AMap aMap = null;
     private UiSettings uiSettings = null;
 
@@ -62,10 +67,17 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
     private List<String> tipList = null;
 
+    private FloatingActionButton fab = null;
+
+    private LatLng startPoint = null;
+    private LatLng endPoint = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_map, container, false);
+        tmv = (TextureMapView) view.findViewById(R.id.map);
+        tmv.onCreate(savedInstanceState);
 
         initMap();
 
@@ -73,7 +85,29 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
 
         initSearch();
 
+        submit();
+
         return view;
+    }
+
+    private void submit() {
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                if (endPoint == null){
+                    Toast.makeText(getActivity(), "请在地图上选择一个标识后重试", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("startLat", startPoint.latitude);
+                    intent.putExtra("startLng", startPoint.longitude);
+                    intent.putExtra("endLat", endPoint.latitude);
+                    intent.putExtra("endLng", endPoint.longitude);
+                    intent.setClass(getActivity(), RoutePage.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void initPoi() {
@@ -98,9 +132,9 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
                                 po.addToMap();
                                 po.zoomToSpan();
                             } else if (suggestionCitis != null && suggestionCitis.size() > 0) {
-                                Toast.makeText(getActivity(), "推荐城市：" + suggestionCitis.get(0).getCityName(), Toast.LENGTH_SHORT);
+                                Toast.makeText(getActivity(), "推荐城市：" + suggestionCitis.get(0).getCityName(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getActivity(), "没有搜索到数据", Toast.LENGTH_SHORT);
+                                Toast.makeText(getActivity(), "没有搜索到数据", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -166,17 +200,28 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
     }
 
     private void initMap() {
-        aMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
+        if (aMap == null){
+            aMap = tmv.getMap();
+        }
+
         aMap.setTrafficEnabled(true);
         aMap.setLocationSource(this);
 
         uiSettings = aMap.getUiSettings();
 
         uiSettings.setMyLocationButtonEnabled(true);
-        uiSettings.setScaleControlsEnabled(true);
+        uiSettings.setZoomControlsEnabled(false);
         uiSettings.setAllGesturesEnabled(true);
 
         aMap.setMyLocationEnabled(true);
+
+        aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                endPoint = marker.getPosition();
+                return false;
+            }
+        });
     }
 
     private void initLoc() {
@@ -236,6 +281,8 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
                 aMapLocation.getCityCode();
                 aMapLocation.getAdCode();
 
+                startPoint = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+
                 if (isFirstLoc) {
                     aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
@@ -262,5 +309,29 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
         sb.append(aMapLocation.getCountry() + "" + aMapLocation.getProvince() + "" + aMapLocation.getCity() + "" + aMapLocation.getDistrict() + "" + aMapLocation.getStreet() + "" + aMapLocation.getStreetNum());
         mo.title(sb.toString());
         return mo;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tmv.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tmv.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        tmv.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        tmv.onSaveInstanceState(bundle);
     }
 }
