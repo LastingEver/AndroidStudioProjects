@@ -1,6 +1,7 @@
 package lasting.travelassistant;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,10 +18,14 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.overlay.WalkRouteOverlay;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
 
 public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnInfoWindowClickListener, AMap.InfoWindowAdapter, RouteSearch.OnRouteSearchListener {
@@ -68,37 +73,7 @@ public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap
         routeWalk = (ImageView) findViewById(R.id.route_walk);
         busList = (ListView) findViewById(R.id.bus_result_list);
         rs = new RouteSearch(this);
-        rs.setRouteSearchListener(new RouteSearch.OnRouteSearchListener() {
-            @Override
-            public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
-                bottom.setVisibility(View.GONE);
-                aMap.clear();
-                if (i == 1000) {
-                    if (busRouteResult != null && busRouteResult.getPaths() != null) {
-                        if (busRouteResult.getPaths().size() > 0) {
-                            BusResultListAdapter brla = new BusResultListAdapter(getApplicationContext(), busRouteResult);
-                            busList.setAdapter(brla);
-                        } else if (busRouteResult != null && busRouteResult.getPaths() == null) {
-                            Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error:" + i, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
-
-            }
-
-            @Override
-            public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
-
-            }
-        });
+        rs.setRouteSearchListener(this);
     }
 
     private void initMap() {
@@ -159,7 +134,7 @@ public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap
         routeBus.setImageResource(R.drawable.route_bus_normal);
         routeWalk.setImageResource(R.drawable.route_walk_normal);
         tmv.setVisibility(View.VISIBLE);
-        busList.setVisibility(View.GONE);
+        busResult.setVisibility(View.GONE);
     }
 
     public void onWalkClick(View view) {
@@ -168,7 +143,7 @@ public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap
         routeBus.setImageResource(R.drawable.route_bus_normal);
         routeWalk.setImageResource(R.drawable.route_walk_select);
         tmv.setVisibility(View.VISIBLE);
-        busList.setVisibility(View.GONE);
+        busResult.setVisibility(View.GONE);
     }
 
     private void searchRouteResult(int routeType, int mode) {
@@ -221,16 +196,103 @@ public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap
 
     @Override
     public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
-
+        bottom.setVisibility(View.GONE);
+        aMap.clear();
+        if (i == 1000) {
+            if (busRouteResult != null && busRouteResult.getPaths() != null) {
+                if (busRouteResult.getPaths().size() > 0) {
+                    BusResultListAdapter brla = new BusResultListAdapter(getApplicationContext(), busRouteResult);
+                    busList.setAdapter(brla);
+                } else if (busRouteResult != null && busRouteResult.getPaths() == null) {
+                    Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Error:" + i, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
-
+    public void onDriveRouteSearched(final DriveRouteResult driveRouteResult, int i) {
+        aMap.clear();
+        if (i == 1000) {
+            if (driveRouteResult != null && driveRouteResult.getPaths() != null) {
+                if (driveRouteResult.getPaths().size() > 0) {
+                    final DrivePath drivePath = driveRouteResult.getPaths().get(0);
+                    DrivingRouteOverlay dro = new DrivingRouteOverlay(getApplicationContext(), aMap, drivePath, driveRouteResult.getStartPos(), driveRouteResult.getTargetPos(), null);
+                    dro.setNodeIconVisibility(false);
+                    dro.setIsColorfulline(true);
+                    dro.removeFromMap();
+                    dro.addToMap();
+                    dro.zoomToSpan();
+                    bottom.setVisibility(View.VISIBLE);
+                    int dis = (int) drivePath.getDistance();
+                    int dur = (int) drivePath.getDuration();
+                    String des = AMapUtil.getFriendlyTime(dur) + "(" + AMapUtil.getFriendlyLength(dis) + ")";
+                    routeTime.setText(des);
+                    routeDetail.setVisibility(View.VISIBLE);
+                    int taxiCost = (int) driveRouteResult.getTaxiCost();
+                    routeDetail.setText("打车约" + taxiCost + "元");
+                    bottom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), DriveRouteDetailActivity.class);
+                            intent.putExtra("drivePath", drivePath);
+                            intent.putExtra("driveResult", driveRouteResult);
+                            startActivity(intent);
+                        }
+                    });
+                } else if (driveRouteResult != null && driveRouteResult.getPaths() == null) {
+                    Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Error:" + i, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
+    public void onWalkRouteSearched(final WalkRouteResult walkRouteResult, int i) {
+        aMap.clear();
+        if (i == 1000){
+            if (walkRouteResult != null && walkRouteResult.getPaths() != null){
+                if (walkRouteResult.getPaths().size() > 0){
+                    final WalkPath walkPath = walkRouteResult.getPaths().get(0);
+                    WalkRouteOverlay wro = new WalkRouteOverlay(this, aMap, walkPath, walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
+                    wro.removeFromMap();
+                    wro.addToMap();
+                    wro.zoomToSpan();
+                    bottom.setVisibility(View.VISIBLE);
+                    int dis = (int) walkPath.getDistance();
+                    int dur = (int) walkPath.getDuration();
+                    String des = AMapUtil.getFriendlyTime(dur)+"("+AMapUtil.getFriendlyLength(dis)+")";
+                    routeTime.setText(des);
+                    routeDetail.setVisibility(View.VISIBLE);
+                    bottom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), WalkRouteDetailActivity.class);
+                            intent.putExtra("walkPath", walkPath);
+                            startActivity(intent);
+                        }
+                    });
+                } else if (walkRouteResult != null && walkRouteResult.getPaths() == null){
+                    Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "对不起，没有搜索到相关数据", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Error:" + i, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
 
     }
 }

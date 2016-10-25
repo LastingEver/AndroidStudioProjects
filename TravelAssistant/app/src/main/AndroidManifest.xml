@@ -34,5 +34,9 @@
         <activity android:name=".RoutePage"></activity>
 
         <activity android:name=".BusRouteDetailActivity"></activity>
+
+        <activity android:name=".DriveRouteDetailActivity"></activity>
+
+        <activity android:name=".WalkRouteDetailActivity"></activity>
     </application>
 </manifest>

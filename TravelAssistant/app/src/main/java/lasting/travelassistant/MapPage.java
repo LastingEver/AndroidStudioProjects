@@ -211,6 +211,7 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
         uiSettings = aMap.getUiSettings();
 
         uiSettings.setMyLocationButtonEnabled(true);
+        uiSettings.setScaleControlsEnabled(true);
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setAllGesturesEnabled(true);
 

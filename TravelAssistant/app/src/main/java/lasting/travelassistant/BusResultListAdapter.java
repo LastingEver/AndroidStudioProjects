@@ -16,7 +16,7 @@ import com.amap.api.services.route.RouteRailwayItem;
 import java.util.List;
 
 public class BusResultListAdapter extends BaseAdapter{
-    private Context context;
+    private Context context = null;
     private BusRouteResult busRouteResult;
     private List<BusPath> busPathList;
 
