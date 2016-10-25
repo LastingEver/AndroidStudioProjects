@@ -103,6 +103,7 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
                     intent.putExtra("startLng", startPoint.longitude);
                     intent.putExtra("endLat", endPoint.latitude);
                     intent.putExtra("endLng", endPoint.longitude);
+                    intent.putExtra("currentCity", currentCity);
                     intent.setClass(getActivity(), RoutePage.class);
                     startActivity(intent);
                 }
@@ -284,7 +285,6 @@ public class MapPage extends SupportMapFragment implements LocationSource, AMapL
                 startPoint = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
 
                 if (isFirstLoc) {
-                    aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
                     onLocationChangedListener.onLocationChanged(aMapLocation);
 
