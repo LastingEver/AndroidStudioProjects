@@ -44,7 +44,7 @@ public class DriveSegmentListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder vh = new ViewHolder();
         if (view == null) {
-            view = View.inflate(context, R.layout.bus_segment, null);
+            view = View.inflate(context, R.layout.route_segment, null);
             vh.driveDirIcon = (ImageView) view.findViewById(R.id.bus_dir_icon);
             vh.driveLineName = (TextView) view.findViewById(R.id.bus_line_name);
             vh.driveDirUp = (ImageView) view.findViewById(R.id.bus_dir_icon_up);

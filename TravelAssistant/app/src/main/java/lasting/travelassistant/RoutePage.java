@@ -55,6 +55,8 @@ public class RoutePage extends Activity implements AMap.OnMapClickListener, AMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
+        ActivityManager.getInstance().addActivity(this);
+
         tmv = (TextureMapView) findViewById(R.id.route_map);
         tmv.onCreate(savedInstanceState);
 

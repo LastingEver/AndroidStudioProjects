@@ -31,6 +31,7 @@ public class MainPage extends FragmentActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         setContentView(R.layout.activity_main);
+        ActivityManager.getInstance().addActivity(this);
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().add(R.id.mdContent, mp).commit();
@@ -80,7 +81,7 @@ public class MainPage extends FragmentActivity {
                         break;
 
                     case R.id.navigationItem4:
-                        finish();
+                        ActivityManager.getInstance().exit();
                         break;
 
                     default:

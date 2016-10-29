@@ -36,6 +36,8 @@ public class BusRouteDetailActivity extends Activity implements AMap.OnMapLoaded
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_detail);
+        ActivityManager.getInstance().addActivity(this);
+
         tmv = (TextureMapView) findViewById(R.id.route_map);
         tmv.onCreate(savedInstanceState);
 

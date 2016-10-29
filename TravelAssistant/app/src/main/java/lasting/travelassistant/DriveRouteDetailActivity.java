@@ -22,6 +22,7 @@ public class DriveRouteDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_detail);
+        ActivityManager.getInstance().addActivity(this);
 
         init();
     }

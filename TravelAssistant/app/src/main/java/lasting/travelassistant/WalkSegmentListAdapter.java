@@ -45,7 +45,7 @@ public class WalkSegmentListAdapter extends BaseAdapter {
         ViewHolder vh = null;
         if (view == null) {
             vh = new ViewHolder();
-            view = View.inflate(context, R.layout.bus_segment, null);
+            view = View.inflate(context, R.layout.route_segment, null);
             vh.lineName = (TextView) view.findViewById(R.id.bus_line_name);
             vh.dirIcon = (ImageView) view.findViewById(R.id.bus_dir_icon);
             vh.dirUp = (ImageView) view.findViewById(R.id.bus_dir_icon_up);

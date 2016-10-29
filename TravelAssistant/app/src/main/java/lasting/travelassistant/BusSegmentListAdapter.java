@@ -76,7 +76,7 @@ public class BusSegmentListAdapter extends BaseAdapter {
         ViewHolder vh;
         if (convertView == null) {
             vh = new ViewHolder();
-            convertView = View.inflate(context, R.layout.bus_segment, null);
+            convertView = View.inflate(context, R.layout.route_segment, null);
             vh.parent = (RelativeLayout) convertView.findViewById(R.id.bus_item);
             vh.busLineName = (TextView) convertView.findViewById(R.id.bus_line_name);
             vh.busDirIcon = (ImageView) convertView.findViewById(R.id.bus_dir_icon);
@@ -220,7 +220,7 @@ public class BusSegmentListAdapter extends BaseAdapter {
 
         private void addBusStation(BusStationItem station) {
             LinearLayout ll = (LinearLayout) View.inflate(context,
-                    R.layout.bus_ex, null);
+                    R.layout.bus_extension, null);
             TextView tv = (TextView) ll
                     .findViewById(R.id.bus_line_station_name);
             tv.setText(station.getBusStationName());
@@ -229,7 +229,7 @@ public class BusSegmentListAdapter extends BaseAdapter {
 
         private void addRailwayStation(RailwayStationItem station) {
             LinearLayout ll = (LinearLayout) View.inflate(context,
-                    R.layout.bus_ex, null);
+                    R.layout.bus_extension, null);
             TextView tv = (TextView) ll
                     .findViewById(R.id.bus_line_station_name);
             tv.setText(station.getName() + " " + getRailwayTime(station.getTime()));

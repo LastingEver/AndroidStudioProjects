@@ -38,5 +38,7 @@
         <activity android:name=".DriveRouteDetailActivity"></activity>
 
         <activity android:name=".WalkRouteDetailActivity"></activity>
+
+        <activity android:name=".SceneryPage"></activity>
     </application>
 </manifest>
