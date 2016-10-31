@@ -1,9 +1,10 @@
 package lasting.travelassistant;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -16,23 +17,39 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.TriangularPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SceneryPage extends Activity {
+public class SceneryPage extends FragmentActivity {
     private static final String[] title = new String[]{"热点新闻", "景区通知", "相关图片"};
     private List<String> titleList = Arrays.asList(title);
-    CardDetailAdapter cda = new CardDetailAdapter(titleList);
+    CardDetailAdapter cda = null;
 
     private MagicIndicator mi = null;
     private ViewPager vp = null;
     private CommonNavigator cn = null;
+
+    private List<Fragment> fragmentList = null;
+    private Fragment hnp = null;
+    private Fragment snp = null;
+    private Fragment rpp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_detail);
         ActivityManager.getInstance().addActivity(this);
+
+        fragmentList = new ArrayList<Fragment>();
+        hnp = new HotNewsPage();
+        snp = new SceneryNoticePage();
+        rpp = new RelativePicturePage();
+        fragmentList.add(hnp);
+        fragmentList.add(snp);
+        fragmentList.add(rpp);
+
+        cda = new CardDetailAdapter(getSupportFragmentManager(), fragmentList);
 
         vp = (ViewPager) findViewById(R.id.viewPager);
         vp.setAdapter(cda);
@@ -41,7 +58,6 @@ public class SceneryPage extends Activity {
         mi.setBackgroundColor(Color.WHITE);
 
         cn = new CommonNavigator(this);
-        cn.setScrollPivotX(0.15f);
         cn.setAdjustMode(true);
         cn.setAdapter(new CommonNavigatorAdapter() {
             @Override

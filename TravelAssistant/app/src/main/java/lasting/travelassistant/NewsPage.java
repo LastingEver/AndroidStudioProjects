@@ -18,7 +18,7 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismis
 public class NewsPage extends ListFragment {
     private static final int INITIAL_DELAY_MILLIS = 300;
 
-    private NewsCardsAdapter nca = null;
+    private NewsAdapter nca = null;
 
     private ListView newsList = null;
 
@@ -37,7 +37,7 @@ public class NewsPage extends ListFragment {
             }
         });
 
-        nca = new NewsCardsAdapter(getActivity());
+        nca = new NewsAdapter(getActivity());
 
         SwingBottomInAnimationAdapter sbiaa = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(nca, new OnDismissCallback() {
             @Override
